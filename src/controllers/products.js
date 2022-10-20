@@ -1,10 +1,13 @@
+
 exports.createProduct = (req, res, next) => {
+    // console.log('request :', req.body.name);
+    const name = req.body.name;
     res.json(
         {
             message: 'Create Product Success',
             data: {
                 id: 1,
-                name: 'Sari gandum',
+                name: name,
                 price: 8000
             }
         }
@@ -31,5 +34,37 @@ exports.getAllProducts = (req, res, next) => {
             ]
         }
     );
+    next();
+}
+
+exports.tesGetParram = (req, res, next) => {
+    const url = req.query.name;
+
+    console.log(url);
+
+
+    // const url = require('url');
+    
+    // const current_url = new URL('http://usefulangle.com/preview?id=123&type=article');
+    
+    // console.log(current_url);
+    // const search_params = current_url.searchParams;
+
+    // const id = search_params.get('id');
+
+    // // "123"
+    // console.log(id);
+    res.json(
+        {
+            message: 'Data dummy',
+            data: [
+                {
+                    id: 1,
+                    name: 'tes',
+                    price: 5000
+                }
+            ]
+        }
+    )
     next();
 }

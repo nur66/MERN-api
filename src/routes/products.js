@@ -10,4 +10,7 @@ router.post('/product', productController.createProduct);
 // READ - GET
 router.get('/products', productController.getAllProducts);
 
+// Tes Get Param
+router.get('/tes', productController.tesGetParram);
+
 module.exports = router;
