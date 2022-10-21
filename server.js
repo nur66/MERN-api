@@ -30,7 +30,7 @@ app.use((error, req, res, next)=> {
     res.status(status).json({message: message, data: data});
 })
 
-mongoose.connect('mongodb+srv://Nur66:Nurlisa_2311@cluster0.0depoxh.mongodb.net/?retryWrites=true&w=majority')
+mongoose.connect('mongodb+srv://Nur66:Nurlisa_2311@cluster0.0depoxh.mongodb.net/blog-database-name?retryWrites=true&w=majority')
 .then(() => {
     app.listen(5000, ()=> {
         console.log('Server run on port 5000');
