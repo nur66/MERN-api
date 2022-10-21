@@ -2,7 +2,8 @@ const express = require('express');
 const bodyParser = require('body-parser');  // untuk mengakses request body
 
 const app = express();
-const productRoutes = require('./src/routes/products');
+// const productRoutes = require('./src/routes/products');
+const authRoutes = require('./src/routes/auth');
 
 app.use(bodyParser.json());  // type Json
 
@@ -15,8 +16,8 @@ app.use(bodyParser.json());  // type Json
 //     res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
 // })
 
-app.use('/', productRoutes);
-// app.use('/v1', productRoutes);
+app.use('/v1/auth', authRoutes);
+// app.use('/', productRoutes);
 
 app.listen(5000, ()=> {
     console.log('Server run on port 5000');

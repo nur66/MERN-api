@@ -1,6 +1,5 @@
 
 exports.createProduct = (req, res, next) => {
-    // console.log('request :', req.body.name);
     const name = req.body.name;
     res.json(
         {
