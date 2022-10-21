@@ -2,8 +2,9 @@ const express = require('express');
 const bodyParser = require('body-parser');  // untuk mengakses request body
 
 const app = express();
-// const productRoutes = require('./src/routes/products');
+
 const authRoutes = require('./src/routes/auth');
+const blogRoutes = require('./src/routes/blog');
 
 app.use(bodyParser.json());  // type Json
 
@@ -17,7 +18,7 @@ app.use(bodyParser.json());  // type Json
 // })
 
 app.use('/v1/auth', authRoutes);
-// app.use('/', productRoutes);
+app.use('/v1/blog', blogRoutes);
 
 app.listen(5000, ()=> {
     console.log('Server run on port 5000');
