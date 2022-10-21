@@ -22,7 +22,6 @@ app.use('/v1/blog', blogRoutes);
 
 // Error global dinamis
 app.use((error, req, res, next)=> {
-    // res.status(400).json({message: 'Error', data: 'data disini'});
     const status = error.errorStatus || 500;
     const message = error.message;
     const data = error.data;
