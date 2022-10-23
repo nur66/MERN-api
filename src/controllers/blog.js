@@ -1,5 +1,7 @@
 const { validationResult } = require("express-validator");
 const BlogPost = require('../models/blog');
+const path = require('path'); // untuk menghapus image di file static kita
+const fs = require('fs'); // untuk remove image harus menggunakan file system
 
 exports.creteBlog = (req, res, next) => {
 
@@ -145,4 +147,41 @@ exports.updateBlogPost = (req, res, next) => {
         next(err);
     })
 
+}
+
+exports.deleteBlogPost = (req, res,next) => {
+    const postId = req.params.postId;
+
+    BlogPost.findById(postId)
+    .then(post => {
+        if(!post){
+            const error = new Error('Data tidak ditemukan');
+            err.errorStatus = 404;
+            throw err;
+        }
+
+        removeImage(post.image);
+        return BlogPost.findByIdAndRemove(postId);
+        
+    })
+    .then(result => {
+        res.status(200).json({
+            message: 'Data berhasil dihapus',
+            data: result
+        })
+    })
+    .catch(err => {
+        next(err);
+    })
+}
+
+// function baru untuk menghapus image
+const removeImage = (filePath) => {
+    console.log('filepath : ', filePath);
+    console.log('dirname: ' . __dirname );
+
+    // __dirname adalah file controller kita saat ini
+    // kita akan menggabungkan dengan file images-storage, karena ada di luar folder kita 2 kali maka kita kasih ../../
+    filePath = path.join(__dirname, '../../', filePath);
+    fs.unlink(filePath, err => console.log(err));
 }
