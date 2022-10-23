@@ -59,3 +59,17 @@ exports.creteBlog = (req, res, next) => {
 
 
 }
+
+exports.getAllBlogPost = (req, res, next) => {
+    BlogPost.find()
+    .then(result => {
+        res.status(200).json({
+            message: 'Data Blog Post Berhasil dipanggil',
+            data: result
+        })
+    })
+    .catch(err => {
+        next(err); // ini akan mengirimkan kedepan atau step berikutnya
+        // dan akan di handle oleh middleware error global
+    });
+}

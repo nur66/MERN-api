@@ -11,4 +11,6 @@ router.post('/post', [
     ],
     blogController.creteBlog);
 
+router.get('/posts', blogController.getAllBlogPost);
+
 module.exports = router;
