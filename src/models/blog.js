@@ -10,6 +10,10 @@ const BlogPost = new Schema({
         type: String,
         required: true
     },
+    image: {
+        type: String, // hanya URL/path nya saja yang akan tersimpan di mongoDB, sedangkan file imagenya tersimpan di dalam project node js
+        required: true
+    },
     author: {
         type: Object,
         required: true

@@ -2,21 +2,10 @@ const { validationResult } = require("express-validator");
 const BlogPost = require('../models/blog');
 
 exports.creteBlog = (req, res, next) => {
-    const title = req.body.title;
-    const image = req.body.image;
-    const body = req.body.body;
 
     const errors = validationResult(req);   // dia akan mengirimkan message yang telah kita tentukan di router
 
-    // kalo ada error dia akan bernilai false
-    // jika errornya tidak kosong maka...
-    // if(!errors.isEmpty()){
-    //     res.status(400).json({
-    //         message: "Request body error",
-    //         data: null
-    //     })
-    // }
-
+    // haru lakukan pengecekan sebelum get request body
     if(!errors.isEmpty()){
         const err = new Error('Input value tidak sesuai');
         err.errorStatus = 400;
@@ -24,9 +13,21 @@ exports.creteBlog = (req, res, next) => {
         throw err;
     }
 
+    if(!req.file){
+        const err = new Error('Image harus di upload');
+        err.errorStatus = 422;
+        err.data = errors.array();
+        throw err;
+    }
+
+    const title = req.body.title;
+    const image = req.file.path; // artinya kita hanya menerima URL nya saja yang kita simpan di folder images-storage
+    const body = req.body.body;
+
     const Posting = new BlogPost({
         title: title,
         body: body,
+        image: image,
         author: {uid: 1, name: 'Nur Iswanto'}
     });
 
