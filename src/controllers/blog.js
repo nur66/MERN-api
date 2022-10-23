@@ -63,17 +63,42 @@ exports.creteBlog = (req, res, next) => {
 }
 
 exports.getAllBlogPost = (req, res, next) => {
+    const currentPage = req.query.page || 1; // kalau user tidak mengirimkan maka kita kasih default 1
+    const perPage = req.query.perPage || 5;
+    let totalData;
+
     BlogPost.find()
+    .countDocuments() // untuk menghitung banyak data
+    .then(count => {
+        totalData = count;
+        // return agar bisa masuk promise baru
+        return BlogPost.find()
+        .skip((currentPage - 1) * perPage)
+        .limit(perPage);
+    })
     .then(result => {
         res.status(200).json({
-            message: 'Data Blog Post Berhasil dipanggil',
-            data: result
+            message: 'Get All Blog Berhasil dipanggil',
+            data: result,
+            total_data: totalData,
+            per_page: perPage,
+            current_page: currentPage
         })
     })
     .catch(err => {
         next(err); // ini akan mengirimkan kedepan atau step berikutnya
         // dan akan di handle oleh middleware error global
     });
+
+
+    // tak digunakan lagi
+    // BlogPost.find()
+    // .then(result => {
+    //     res.status(200).json({
+    //         message: 'Data Blog Post Berhasil dipanggil',
+    //         data: result
+    //     })
+    // })
 }
 
 exports.getAllBlogPostById = (req, res,next) => {

@@ -11,6 +11,8 @@ router.post('/post', [
     ],
     blogController.creteBlog);
 
+// Gunakan pagination
+// router.get('/posts?page=1&perPage=5', blogController.getAllBlogPost); // param query nya biar user yang kirim
 router.get('/posts', blogController.getAllBlogPost);
 
 router.get('/post/:postId', blogController.getAllBlogPostById);
