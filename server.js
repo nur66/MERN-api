@@ -2,6 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');  // untuk mengakses request body
 const mongoose = require('mongoose');
 const multer = require('multer');  // untuk upload image / multipart
+const path = require('path');
 
 const app = express();
 
@@ -29,6 +30,8 @@ const fileFilter = (req, file, cb) => {
     }
 }
 app.use(multer({storage: fileStorage, fileFilter: fileFilter}).single('image'));
+app.use('/images', express.static(path.join(__dirname, 'images-storage'))) // untuk dapat memanggil image di postman
+// __dirname akan merepresentasikan tempat folder projec kita berada, jadi kita membuat static
 //_________________________________________End Upload Image________________________________________________//
 
 app.use(bodyParser.json());  // type Json
